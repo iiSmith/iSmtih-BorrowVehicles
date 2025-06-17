@@ -1,6 +1,10 @@
 fx_version 'cerulean'
 games { 'gta5' }
+
 author 'iSmtih'
+description 'Borrow Vehicles Script - سكربت استعارة السيارات'
+
+version '1.0.1'
 
 client_scripts {
     'client/*.lua',

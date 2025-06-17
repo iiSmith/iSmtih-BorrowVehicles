@@ -151,6 +151,10 @@ exports['qb-target']:AddGlobalVehicle({
                 end
             end
 
+            if IsPedSittingInAnyVehicle(GetPlayerPed(-1))then
+                return false
+            end
+
             return CheckNpcStatus(entity)
             
             end,
@@ -162,5 +166,3 @@ exports['qb-target']:AddGlobalVehicle({
     },
     distance = 2.5,
 })
-
-

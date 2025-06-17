@@ -90,14 +90,17 @@ local function BorrowVehicle(vehicle)
     Wait(1500)
 
     local playerPed = PlayerPedId()
-    local playerCoords = GetEntityCoords(playerPed)
 
-    TaskGoToEntity(driverPed, playerPed, -1, 2.0, 1.0, 1073741824, 0)
+    SetBlockingOfNonTemporaryEvents(driverPed, true)
+    SetPedFleeAttributes(driverPed, 0, false)
+    SetPedCombatAttributes(driverPed, 46, true)
+    SetPedCombatAttributes(driverPed, 1424, true)
+
+    TaskGoToEntity(driverPed, playerPed, -1, 2.0, 3.0, 1073741824, 0)
 
     while #(GetEntityCoords(driverPed) - GetEntityCoords(playerPed)) > 2.0 and not IsEntityDead(driverPed) do
         Wait(100)
     end
-
 
     if IsEntityDead(driverPed) then return end
 
@@ -115,14 +118,17 @@ local function BorrowVehicle(vehicle)
     TriggerEvent('vehiclekeys:client:SetOwner', plate)
 
     ClearPedTasks(driverPed)
+
     SetBlockingOfNonTemporaryEvents(driverPed, true)
     SetPedFleeAttributes(driverPed, 0, false)
     SetPedAsGroupMember(driverPed, GetPedGroupIndex(PlayerPedId()))
+
     TaskSmartFleePed(driverPed, playerPed, 100.0, -1, false, false)
     SetPedKeepTask(driverPed, true)
 
     SetVehicleDoorsLocked(vehicle, 1)
 end
+
 
 exports['qb-target']:AddGlobalVehicle({
     options = {

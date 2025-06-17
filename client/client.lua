@@ -92,11 +92,12 @@ local function BorrowVehicle(vehicle)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
 
-    TaskGoToCoordAnyMeans(driverPed, playerCoords.x, playerCoords.y, playerCoords.z, 1.0, 0, 0, 786603, 0)
+    TaskGoToEntity(driverPed, playerPed, -1, 2.0, 1.0, 1073741824, 0)
 
-    while #(GetEntityCoords(driverPed) - playerCoords) > 2.0 and not IsEntityDead(driverPed) do
-        Wait(1000)
+    while #(GetEntityCoords(driverPed) - GetEntityCoords(playerPed)) > 2.0 and not IsEntityDead(driverPed) do
+        Wait(100)
     end
+
 
     if IsEntityDead(driverPed) then return end
 
@@ -109,7 +110,9 @@ local function BorrowVehicle(vehicle)
 
     Wait(2000)
 
-    TriggerEvent('vehiclekeys:client:SetOwner', GetVehicleNumberPlateText(vehicle))
+    local plate = GetVehicleNumberPlateText(vehicle)
+
+    TriggerEvent('vehiclekeys:client:SetOwner', plate)
 
     ClearPedTasks(driverPed)
     SetBlockingOfNonTemporaryEvents(driverPed, true)
